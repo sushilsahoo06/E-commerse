@@ -7,6 +7,8 @@ import Dashboard from "./pages/admin/Dashboard";
 import Products from "./pages/admin/Products";
 import Orders from "./pages/admin/Orders";
 import Features from "./pages/admin/Features";
+import Shopping_layout from "./pages/shopping-view/Shopping_layout";
+import NotFound from "./pages/not-found/NotFound";
 
 function App() {
   return (
@@ -22,6 +24,10 @@ function App() {
           <Route path="orders" element={<Orders/>}></Route>
           <Route path="features" element={<Features/>}></Route>
         </Route>
+        <Route path="/shop" element={<Shopping_layout/>}>
+
+        </Route>
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
     </div>
   );
