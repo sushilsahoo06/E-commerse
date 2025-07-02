@@ -5,7 +5,7 @@ import Header from './header'
 
 export default function AdminLayout() {
   return (
-    <div className='flex min-h-screen w-full'>
+    <div className='flex min-h-screen w-screen'>
       {/* admin sidebar*/}
       <Sidebar/>
       <div className='flex flex-1 flex-col'>
