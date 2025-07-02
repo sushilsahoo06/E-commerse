@@ -7,8 +7,8 @@ import Dashboard from "./pages/admin/Dashboard";
 import Products from "./pages/admin/Products";
 import Orders from "./pages/admin/Orders";
 import Features from "./pages/admin/Features";
-import Shopping_layout from "./pages/shopping-view/Shopping_layout";
 import NotFound from "./pages/not-found/NotFound";
+import Shopping_layout from "./components/shopping-view/Shopping_layout";
 
 function App() {
   return (
