@@ -26,3 +26,23 @@ export const registationFromControls=[
 
   },
 ]
+
+
+export const loginFromControls=[
+  {
+    name:'email',
+    label:'Email',
+    placeholder:'Enter your email',
+    componentType:'input',
+    type:'email',
+
+  },
+  {
+    name:'password',
+    label:'password',
+    placeholder:'Enter your password',
+    componentType:'input',
+    type:'password',
+
+  },
+]

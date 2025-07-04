@@ -21,7 +21,7 @@ export default function CommonFrom({
   formData,
   setformData,
   onSubmit,
-  BUttonText,
+  buttonText,
 }) {
   function renderInputByComponentType(getControlItem) {
     let element = null;
@@ -52,7 +52,7 @@ export default function CommonFrom({
             value={value}
             onValueChange={(value) =>
               setformData({
-                ...setformData,
+                ...formData,
                 [getControlItem.name]: value,
               })
             }
@@ -124,7 +124,7 @@ export default function CommonFrom({
         ))}
       </div>
       <Button type="submit" className="mt-2 w-full">
-        {BUttonText || "Submit"}
+        {buttonText || "Submit"}
       </Button>
     </form>
   );
