@@ -14,7 +14,7 @@ import { Button } from "../ui/button";
 const types = {
   INPUT: "input",
   TEXT: "text",
-  TEXTAREA: "textarea",
+  SELECT: "select",
 };
 export default function CommonFrom({
   fromControls,
@@ -24,9 +24,9 @@ export default function CommonFrom({
   BUttonText,
 }) {
   function renderInputByComponentType(getControlItem) {
-    const element = null;
+    let element = null;
 
-    const value = formData[getControlItem.name];
+    const value = formData[getControlItem.name] || "";
     switch (getControlItem.componentType) {
       case types.INPUT:
         element = (
@@ -35,13 +35,28 @@ export default function CommonFrom({
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
             type={getControlItem.type}
+            value={value}
+            onChange={(event) =>
+              setformData({
+                ...formData,
+                [getControlItem.name]: event.target.value,
+              })
+            }
           />
         );
 
         break;
-      case types.TEXT:
+      case types.SELECT:
         element = (
-          <Select>
+          <Select
+            value={value}
+            onValueChange={(value) =>
+              setformData({
+                ...setformData,
+                [getControlItem.name]: value,
+              })
+            }
+          >
             <SelectTrigger className="w-full">
               <SelectValue
                 placeholder={getControlItem.placeholder}
@@ -66,6 +81,12 @@ export default function CommonFrom({
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.id}
+            onChange={(event) =>
+              setformData({
+                ...formData,
+                [getControlItem.name]: event.target.value,
+              })
+            }
           />
         );
 
@@ -78,6 +99,13 @@ export default function CommonFrom({
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
             type={getControlItem.type}
+            value={value}
+            onChange={(event) =>
+              setformData({
+                ...formData,
+                [getControlItem.name]: event.target.value,
+              })
+            }
           />
         );
         break;
