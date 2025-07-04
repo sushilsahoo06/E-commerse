@@ -26,7 +26,7 @@ export default function CommonFrom({
   function renderInputByComponentType(getControlItem) {
     let element = null;
 
-    const value = formData[getControlItem.name] || "";
+    const value = formData[getControlItem.name] || "";//value--name
     switch (getControlItem.componentType) {
       case types.INPUT:
         element = (
@@ -39,7 +39,7 @@ export default function CommonFrom({
             onChange={(event) =>
               setformData({
                 ...formData,
-                [getControlItem.name]: event.target.value,
+                [getControlItem.name]: event.target.value,//Grabs the latest typed value
               })
             }
           />
