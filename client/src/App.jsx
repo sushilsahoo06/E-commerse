@@ -21,7 +21,7 @@ import CheckAuth from "./components/common/CheckAuth";
 
 function App() {
   const isAuthenticated = false;
-  const user = null;
+  const user = {};
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>

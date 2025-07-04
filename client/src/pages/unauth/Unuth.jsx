@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Unuth() {
   return (
-    <div>page not found</div>
+    <div>you don't have access the pages</div>
   )
 }

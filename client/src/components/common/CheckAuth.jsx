@@ -33,6 +33,7 @@ export default function CheckAuth({ isAuthenticated, user, childern }) {
   ) {
     return <Navigate to="/Unauth-page" />;
   }
+  
   if (
     isAuthenticated &&
     user?.role === "admin" &&
