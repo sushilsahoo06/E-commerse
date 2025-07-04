@@ -1,7 +1,8 @@
-import { Label } from "@radix-ui/react-label";
+import {Label} from "../ui/label"
 import React from "react";
 import { Input } from "../ui/input";
 import {
+  
   Select,
   SelectContent,
   SelectItem,
@@ -118,7 +119,7 @@ export default function CommonFrom({
       <div className="flex flex-col gap-3">
         {fromControls.map((controlItem) => (
           <div className="grid w-full gap-1.5" key={controlItem.key}>
-            <Label className="mb-1">{controlItem.Label}</Label>
+            <Label className="mb-1">{controlItem.label}</Label>
             {renderInputByComponentType(controlItem)}
           </div>
         ))}
@@ -129,3 +130,4 @@ export default function CommonFrom({
     </form>
   );
 }
+
