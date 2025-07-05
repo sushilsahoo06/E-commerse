@@ -1,4 +1,4 @@
-const bycript = require("bcryptjs"); //it safely store the password
+const bcrypt = require("bcryptjs"); //it safely store the password
 const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
 
@@ -15,13 +15,13 @@ const registerUser = async (req, res) => {
     await newUser.save();
     res.status(200).json({
       success: true,
-      meassage: "Registation succesfull",
+      message: "Registation succesfull",
     });
   } catch (e) {
     console.log(e);
     res.status(500).json({
       success: false,
-      meassage: "some error occured",
+      message: "some error occured",
     });
   }
 };
@@ -33,7 +33,7 @@ const login = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      meassage: "some error occured",
+      message: "some error occured",
     });
   }
 };

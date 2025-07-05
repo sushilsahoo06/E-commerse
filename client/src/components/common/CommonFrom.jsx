@@ -28,6 +28,7 @@ export default function CommonFrom({
     let element = null;
 
     const value = formData[getControlItem.name] || "";//value--name
+    
     switch (getControlItem.componentType) {
       case types.INPUT:
         element = (
@@ -118,7 +119,7 @@ export default function CommonFrom({
     <form onSubmit={onSubmit}>
       <div className="flex flex-col gap-3">
         {fromControls.map((controlItem) => (
-          <div className="grid w-full gap-1.5" key={controlItem.key}>
+          <div className="grid w-full gap-1.5" key={controlItem.name}>
             <Label className="mb-1">{controlItem.label}</Label>
             {renderInputByComponentType(controlItem)}
           </div>

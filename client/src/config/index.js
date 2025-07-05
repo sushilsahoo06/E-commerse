@@ -2,7 +2,7 @@
 
 export const registationFromControls=[
   {
-    name:'username',
+    name:'userName',
     label:'username',
     placeholder:'Enter your name',
     componentType:'input',

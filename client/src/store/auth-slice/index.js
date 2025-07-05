@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  isAuthenicated: false,
+  isAuthenticated: false,
   isLoading: false,
   user: null,
 };
 export const registerUser = createAsyncThunk(//register user
-  "./auth/register",
+  "auth/register",
   async (formData) => {
     const response = await axios.post(
       "http://localhost:5000/api/auth/register",
@@ -30,13 +30,13 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user =null;
-        state.isAuthenicated = false;
+        state.user =action.payload.user ||null;
+        state.isAuthenticated = false;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
-        state.isAuthenicated = false;
+        state.isAuthenticated = false;
       });
   },
 });
