@@ -1,20 +1,25 @@
-
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import CommonFrom from "@/components/common/CommonFrom";
 import { registationFromControls } from "@/config";
+import { useDispatch } from "react-redux";
+import { registerUser } from "@/store/auth-slice";
 
-const initialstate={
-  userName:'',
-  email:'',
-  password:'',
-}
+const initialstate = {
+  userName: "",
+  email: "",
+  password: "",
+};
 
 export default function Register() {
-  const [formData , setFromData]=useState(initialstate);
-  function onSubmit(){
-
+  const [formData, setFromData] = useState(initialstate);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  function onSubmit(event) {
+    event.preventDefault();
+    dispatch(registerUser(formData).then(() => navigate("/ayuth/login")));
   }
+  console.log(formData);
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
@@ -32,11 +37,11 @@ export default function Register() {
         </p>
       </div>
       <CommonFrom
-      fromControls={registationFromControls}
-      buttonText={'Sign account'}
-      formData={formData}
-      setformData={setFromData}
-      onSubmit={onSubmit}
+        fromControls={registationFromControls}
+        buttonText={"Sign account"}
+        formData={formData}
+        setformData={setFromData}
+        onSubmit={onSubmit}
       />
     </div>
   );

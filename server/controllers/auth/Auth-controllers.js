@@ -1,18 +1,46 @@
-
+const bycript = require("bcryptjs"); //it safely store the password
+const jwt = require("jsonwebtoken");
+const User = require("../../models/user");
 
 //register
-const register=async(req,res)=>{
-  
-}
-
-
+const registerUser = async (req, res) => {
+  const { userName, email, password } = req.body;
+  try {
+    const hashPassword = await bcrypt.hash(password, 12);
+    const newUser = new User({
+      userName,
+      email,
+      password: hashPassword,
+    });
+    await newUser.save();
+    res.status(200).json({
+      success: true,
+      meassage: "Registation succesfull",
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      meassage: "some error occured",
+    });
+  }
+};
 
 //login
-
-
+const login = async (req, res) => {
+  try {
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      meassage: "some error occured",
+    });
+  }
+};
 
 //logout
 
-
-
 //auth middlewire
+
+
+module.exports={registerUser};

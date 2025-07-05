@@ -81,7 +81,7 @@ export default function CommonFrom({
           <Textarea
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
-            id={getControlItem.id}
+            id={getControlItem.name}
             onChange={(event) =>
               setformData({
                 ...formData,
