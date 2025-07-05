@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   userName: {
-    type: String,      // ✅ Correct
-    required: true,    // ✅ Boolean
-    unique: true,      // ✅ Boolean
+    type: String,      //Correct
+    required: true,    
+    unique: true,      
   },
   email: {
     type: String,

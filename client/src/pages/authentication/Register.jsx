@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CommonFrom from "@/components/common/CommonFrom";
 import { registationFromControls } from "@/config";
 import { useDispatch } from "react-redux";
@@ -17,7 +17,9 @@ export default function Register() {
   const navigate = useNavigate();
   function onSubmit(event) {
     event.preventDefault();
-    dispatch(registerUser(formData)).then((data) =>console.log(data));
+    dispatch(registerUser(formData)).then(()=>navigate('/auth/login')
+      
+    );
   }
   console.log(formData);
   return (
