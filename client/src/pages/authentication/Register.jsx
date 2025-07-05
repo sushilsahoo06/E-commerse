@@ -4,6 +4,7 @@ import CommonFrom from "@/components/common/CommonFrom";
 import { registationFromControls } from "@/config";
 import { useDispatch } from "react-redux";
 import { registerUser } from "@/store/auth-slice";
+import { toast } from "sonner";
 
 const initialstate = {
   userName: "",
@@ -15,11 +16,17 @@ export default function Register() {
   const [formData, setFromData] = useState(initialstate);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   function onSubmit(event) {
     event.preventDefault();
-    dispatch(registerUser(formData)).then(()=>navigate('/auth/login')
-      
-    );
+    dispatch(registerUser(formData)).then((data) => {
+      if (data?.payload?.success) {
+        if(typeof data?.payload?.message ==='string'){
+          toast(data?.payload?.message)
+        }
+        navigate("/auth/login");
+      }
+    });
   }
   console.log(formData);
   return (
