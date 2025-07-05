@@ -21,10 +21,11 @@ export default function Register() {
     event.preventDefault();
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
-        if(typeof data?.payload?.message ==='string'){
-          toast(data?.payload?.message)
-        }
+        toast(data?.payload?.message);
+
         navigate("/auth/login");
+      } else {
+        toast.warning(data?.payload?.message)
       }
     });
   }
