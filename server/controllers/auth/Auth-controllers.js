@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
 };
 
 //login
-const login = async (req, res) => {
+const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const cheskUser = await User.findOne({ email });
@@ -85,4 +85,4 @@ const login = async (req, res) => {
 
 //auth middlewire
 
-module.exports = { registerUser };
+module.exports = { registerUser ,loginUser };
