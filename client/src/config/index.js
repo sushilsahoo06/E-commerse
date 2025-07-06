@@ -31,7 +31,7 @@ export const registationFromControls=[
 export const loginFromControls=[
   {
     name:'email',
-    label:'Email',
+    label:'email',
     placeholder:'Enter your email',
     componentType:'input',
     type:'email',

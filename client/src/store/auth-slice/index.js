@@ -20,7 +20,7 @@ export const registerUser = createAsyncThunk(//register user
 
 
 export const loginUser = createAsyncThunk(//login user
-  "auth/register",
+  "auth/login",
   async (formData) => {
     const response = await axios.post(
       "http://localhost:5000/api/auth/login",
@@ -58,7 +58,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user =action.payload ||null;
+        state.user =action.payload.user ||null;
         state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
