@@ -56,7 +56,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       {
         id: cheskUser._id,
-        role: cheskUser.email,
+        role: cheskUser.role,
         email: cheskUser.email,
       },
       "CLIENT_SECRET_KEY",
@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
       success: true,
       message: "Loggidin in Successfully",
-      User: {
+      user: {
         email: cheskUser.email,
         role: cheskUser.role,
         id: cheskUser._id,
