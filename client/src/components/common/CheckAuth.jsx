@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-export default function CheckAuth({ isAuthenticated, user, childern }) {
+export default function CheckAuth({ isAuthenticated, user, children }) {
   const location = useLocation();
   if (
     //nor registation
@@ -41,5 +41,5 @@ export default function CheckAuth({ isAuthenticated, user, childern }) {
   ) {
     return <Navigate to="/admin/dashboard" />;
   }
-  return childern;
+  return children;
 }

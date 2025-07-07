@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Products() {
   return (
-    <div>Products</div>
+    <div style={{color:'red'}}>Products</div>
   )
 }

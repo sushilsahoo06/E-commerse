@@ -33,7 +33,7 @@ function App() {
   },[dispatch])
 
   if(isLoading){
-    <div>Loading...</div>
+    return <div>Loading...</div>
   }
   return (
     <div className="flex flex-col overflow-hidden bg-white">
