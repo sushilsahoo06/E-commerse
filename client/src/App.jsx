@@ -18,12 +18,23 @@ import ShoppingHome from "./pages/shopping-view/ShoppingHome";
 import ShoppingListing from "./pages/shopping-view/ShoppingListing";
 import Unuth from "./pages/unauth/Unuth";
 import CheckAuth from "./components/common/CheckAuth";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { checkAuth } from "./store/auth-slice";
 
 function App() {
   // const isAuthenticated = false;
   // const user = {};
-  const {user,isAuthenticated}=useSelector(state=>state.auth)
+  const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth)
+  const dispatch=useDispatch();
+
+  useEffect(()=>{
+    dispatch(checkAuth())
+  },[dispatch])
+
+  if(isLoading){
+    <div>Loading...</div>
+  }
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
