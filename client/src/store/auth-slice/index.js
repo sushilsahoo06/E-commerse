@@ -33,12 +33,11 @@ export const loginUser = createAsyncThunk(
 );
 
 export const checkAuth = createAsyncThunk(
-  //register user
   "auth/check-auth",
   async () => {
-    const response = await axios.post(
+    const response = await axios.get(
       "http://localhost:5000/api/auth/check-auth",
-      {},
+      
       {
         withCredentials: true,
         headers: {

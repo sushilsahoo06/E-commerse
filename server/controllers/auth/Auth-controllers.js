@@ -6,8 +6,8 @@ const User = require("../../models/user");
 const registerUser = async (req, res) => {
   const { userName, email, password } = req.body;
   try {
-    const cheskUser = await User.findOne({ email });
-    if (cheskUser)
+    const checkuser = await User.findOne({ email });
+    if (checkuser)
       return res.json({
         success: false,
         message: "User Already exists with the same email ! Please try again ?",
@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
     await newUser.save();
     res.status(200).json({
       success: true,
-      message: "Registation succesfull",
+      message: "Registration successful",
     });
   } catch (e) {
     console.log(e);
@@ -37,15 +37,15 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const cheskUser = await User.findOne({ email });
-    if (!cheskUser)
+    const checkuser = await User.findOne({ email });
+    if (!checkuser)
       return res.json({
         success: false,
         message: "User does't exists! Please Register first ",
       });
     const checkPasswordMatch = await bcrypt.compare(
       password,
-      cheskUser.password
+      checkuser.password
     );
     if (!checkPasswordMatch)
       return res.json({
@@ -55,9 +55,9 @@ const loginUser = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: cheskUser._id,
-        role: cheskUser.role,
-        email: cheskUser.email,
+        id: checkuser._id,
+        role: checkuser.role,
+        email: checkuser.email,
       },
       "CLIENT_SECRET_KEY",
       { expiresIn: "60m" }
@@ -65,11 +65,11 @@ const loginUser = async (req, res) => {
 
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
       success: true,
-      message: "Loggidin in Successfully",
+      message: "Logged in Successfully",
       user: {
-        email: cheskUser.email,
-        role: cheskUser.role,
-        id: cheskUser._id,
+        email: checkuser.email,
+        role: checkuser.role,
+        id: checkuser._id,
       },
     });
   } catch (e) {
@@ -90,7 +90,7 @@ const logoutUser = (req, res) => {
 };
 //auth middlewire
 const authMiddleware = async (req, res, next) => {
-  const token = req.cookie.token;
+  const token = req.cookies.token;
   if (!token)
     return res.status(401).json({
       success: false,
