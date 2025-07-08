@@ -63,15 +63,21 @@ const loginUser = async (req, res) => {
       { expiresIn: "60m" }
     );
 
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
-      success: true,
-      message: "Logged in Successfully",
-      user: {
-        email: checkuser.email,
-        role: checkuser.role,
-        id: checkuser._id,
-      },
-    });
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: false, // ✅ correct for HTTP (localhost/dev)
+        sameSite: "Lax", // ✅ this is okay if frontend and backend use same IP
+      })
+      .json({
+        success: true,
+        message: "Logged in Successfully",
+        user: {
+          email: checkuser.email,
+          role: checkuser.role,
+          id: checkuser._id,
+        },
+      });
   } catch (e) {
     console.log(e);
     res.status(500).json({
@@ -108,4 +114,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser ,authMiddleware};
+module.exports = { registerUser, loginUser, logoutUser, authMiddleware };
