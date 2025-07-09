@@ -1,5 +1,4 @@
 
-
 export const registationFromControls=[
   {
     name:'userName',
@@ -47,8 +46,3 @@ export const loginFromControls=[
   },
 ]
 
-export const adminSidebarMenuItems=[
-  {
-    id:'dashboard'
-  }
-]

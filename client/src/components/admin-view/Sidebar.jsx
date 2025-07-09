@@ -1,9 +1,39 @@
-import { ChartNoAxesCombined } from "lucide-react";
+import { BadgeCheck, ChartNoAxesCombined, LayoutDashboard, ShoppingBasket } from "lucide-react";
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
+const adminSidebarMenuItems=[
+  {
+    id:'dashboard',
+    label:'dashboard',
+    path:'/admin/dashboard',
+    icon:<LayoutDashboard />
+  },
+  {
+    id:'products',
+    label:'products',
+    path:'/admin/products',
+    icon:<ShoppingBasket />
+  },
+  {
+    id:'orders',
+    label:'orders',
+    path:'/admin/orders',
+    icon:<BadgeCheck />
+  }
+]
 
-function menuItems(){
-  
+function MenuItems() {
+  const navigate=useNavigate()
+  return (
+    <nav className="mt-8 flex-col flex gap-2">
+      {adminSidebarMenuItems.map(menuItem => (
+        <div key={menuItem.id} onClick={()=>navigate(menuItem.path)} className="flex items-center gap-2 rounded-md px-3 py-2">
+          {menuItem.icon}
+          <span>{menuItem.label}</span>
+        </div>
+      ))}
+    </nav>
+  );
 }
 
 export default function Sidebar() {
@@ -18,6 +48,7 @@ export default function Sidebar() {
           <ChartNoAxesCombined size={30} />
           <h1 className="text-xl font-extrabold">Admin pannel</h1>
         </div>
+        <MenuItems/>
       </aside>
     </Fragment>
   );
