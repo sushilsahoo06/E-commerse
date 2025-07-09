@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 const adminSidebarMenuItems = [
   {
     id: "dashboard",
@@ -45,13 +46,25 @@ function MenuItems() {
   );
 }
 
-export default function Sidebar() {
+export default function Sidebar({open, setOpen}) {
   const navigate = useNavigate();
   return (
     <Fragment>
-      <aside
-        className="hidden w-64 flex-col border-r bg-background p-6 lg:flex"
-      >
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent side="right" className="w-64">
+          <div className="flex flex-col h-full">
+            <SheetHeader className="border-b">
+              <SheetTitle>
+                <ChartNoAxesCombined size={30} />
+                Admin Panel
+              </SheetTitle>
+            </SheetHeader>
+            <MenuItems />
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <aside className="hidden w-64 flex-col border-r bg-background p-6 lg:flex">
         <div
           onClick={() => navigate("/admin/dashboard")}
           className="flex items-center gap-2 cursor-pointer"

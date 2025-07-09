@@ -3,10 +3,10 @@ import { Button } from '../ui/button'
 import { LogOut, SquareMenu } from 'lucide-react'
 
 
-export default function Header() {
+export default function Header({setOpen}) {
   return (
     <header className='flex items-center justify-between px-4 py-3 bg-background'>
-      <Button className='lg:hidden sm:block'>
+      <Button onClick={()=>setOpen(true)} className='lg:hidden sm:block'>
         <SquareMenu/>
         <span className='sr-only'>Toggle menu</span>
       </Button>
