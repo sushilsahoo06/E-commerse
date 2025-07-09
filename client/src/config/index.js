@@ -46,3 +46,9 @@ export const loginFromControls=[
 
   },
 ]
+
+export const adminSidebarMenuItems=[
+  {
+    id:'dashboard'
+  }
+]
