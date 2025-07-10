@@ -29,7 +29,6 @@ const adminSidebarMenuItems = [
 ];
 
 function MenuItems({setOpen}) {
-  console.log(setOpen)
   const navigate = useNavigate();
   return (
     <nav className="mt-8 flex-col flex gap-2">

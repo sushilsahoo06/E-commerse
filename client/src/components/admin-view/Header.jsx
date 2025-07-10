@@ -16,9 +16,7 @@ export default function Header({setOpen}) {
           Logout
         </Button>
       </div>
-
     </header>
-
   )
 }
 
