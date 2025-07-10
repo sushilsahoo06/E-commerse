@@ -1,14 +1,14 @@
-import {Label} from "../ui/label"
+import { Label } from "../ui/label";
 import React from "react";
 import { Input } from "../ui/input";
+
 import {
-  
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
+} from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
@@ -27,8 +27,8 @@ export default function CommonFrom({
   function renderInputByComponentType(getControlItem) {
     let element = null;
 
-    const value = formData[getControlItem.name] || "";//value--name
-    
+    const value = formData[getControlItem.name] || ""; //value--name
+
     switch (getControlItem.componentType) {
       case types.INPUT:
         element = (
@@ -41,7 +41,7 @@ export default function CommonFrom({
             onChange={(event) =>
               setformData({
                 ...formData,
-                [getControlItem.name]: event.target.value,//Grabs the latest typed value
+                [getControlItem.name]: event.target.value, //Grabs the latest typed value
               })
             }
           />
@@ -60,15 +60,13 @@ export default function CommonFrom({
             }
           >
             <SelectTrigger className="w-full">
-              <SelectValue
-                placeholder={getControlItem.placeholder}
-              ></SelectValue>
+              <SelectValue placeholder={getControlItem.label}></SelectValue>
             </SelectTrigger>
             <SelectContent>
               {getControlItem.options && getControlItem.options.length > 0
                 ? getControlItem.options.map((optionItem) => (
                     <SelectItem key={optionItem.id} value={optionItem.id}>
-                      {optionItem.lebel}
+                      {optionItem.label}
                     </SelectItem>
                   ))
                 : null}
@@ -131,4 +129,3 @@ export default function CommonFrom({
     </form>
   );
 }
-

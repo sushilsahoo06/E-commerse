@@ -1,3 +1,4 @@
+import CommonFrom from "@/components/common/CommonFrom";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -5,10 +6,22 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { addProductFormElements } from "@/config";
 import React, { Fragment, useState } from "react";
+const initialFormDat = {
+  Image: null,
+  title: " ",
+  Description: " ",
+  category: " ",
+  brand: " ",
+  price: " ",
+  salePrice: " ",
+  totalStock: " ",
+};
 
 export default function Products() {
   const [openCreateProductDialog, setopenCreateProductDialog] = useState(false);
+  const [formData, setformData] = useState(initialFormDat);
   return (
     <Fragment>
       <div className="mb-5 flex w-full justify-end">
@@ -27,6 +40,14 @@ export default function Products() {
             <SheetHeader>
               <SheetTitle>Add New Product</SheetTitle>
             </SheetHeader>
+            <div className="py-6 px-5">
+              <CommonFrom
+                formData={formData}
+                setformData={setformData}
+                fromControls={addProductFormElements}
+                buttonText={'Add'}
+              />
+            </div>
           </SheetContent>
         </Sheet>
       </div>
