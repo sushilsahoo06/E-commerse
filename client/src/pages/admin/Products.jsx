@@ -1,3 +1,4 @@
+import ImageUpload from "@/components/admin-view/ImageUpload";
 import CommonFrom from "@/components/common/CommonFrom";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +23,10 @@ const initialFormDat = {
 export default function Products() {
   const [openCreateProductDialog, setopenCreateProductDialog] = useState(false);
   const [formData, setformData] = useState(initialFormDat);
+  const [imageFile, setImageFile] = useState(null);
+  const [uploadImageURL, setuploadImageURL] = useState("");
+
+  function onSubmit() {}
   return (
     <Fragment>
       <div className="mb-5 flex w-full justify-end">
@@ -40,12 +45,18 @@ export default function Products() {
             <SheetHeader>
               <SheetTitle>Add New Product</SheetTitle>
             </SheetHeader>
+            <ImageUpload
+              file={imageFile}
+              setFile={setImageFile}
+              uploadImageURL={uploadImageURL}
+              setuploadImageURL={setuploadImageURL}
+            />
             <div className="py-6 px-5">
               <CommonFrom
                 formData={formData}
                 setformData={setformData}
                 fromControls={addProductFormElements}
-                buttonText={'Add'}
+                buttonText={"Add"}
               />
             </div>
           </SheetContent>
