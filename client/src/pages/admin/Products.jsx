@@ -46,8 +46,8 @@ export default function Products() {
               <SheetTitle>Add New Product</SheetTitle>
             </SheetHeader>
             <ImageUpload
-              file={imageFile}
-              setFile={setImageFile}
+              imageFile={imageFile}
+              setImageFile={setImageFile}
               uploadImageURL={uploadImageURL}
               setuploadImageURL={setuploadImageURL}
             />
