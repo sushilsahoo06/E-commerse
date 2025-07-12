@@ -8,6 +8,7 @@ cloudinary.config({
 });
 
 const storage=new multer.memoryStorage();
+const upload=multer({storage});
 
 async function imageUploadUtill(file){
   const result=await cloudinary.uploader.upload(file,{
@@ -17,6 +18,6 @@ async function imageUploadUtill(file){
   return result;
 }
 
-const upload=multer({storage});
+
 
 module.exports={upload,imageUploadUtill}
