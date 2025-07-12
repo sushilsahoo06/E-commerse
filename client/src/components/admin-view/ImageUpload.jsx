@@ -21,15 +21,15 @@ export default function ImageUpload({
   }
   function handleDrop(event) {
     event.preventDefault();
-    const droppedFile = event.dataTransfer.files?.[0];//
+    const droppedFile = event.dataTransfer.files?.[0]; //
 
     if (droppedFile) setImageFile(droppedFile);
   }
 
-  function handleRemoveImage(){
-    setImageFile(null)
-    if(inputRef.current){
-      inputRef.current.value='';
+  function handleRemoveImage() {
+    setImageFile(null);
+    if (inputRef.current) {
+      inputRef.current.value = "";
     }
   }
   const inputRef = useRef();
