@@ -10,6 +10,7 @@ export default function ImageUpload({
   setImageFile,
   uploadImageURL,
   setuploadImageURL,
+  setimageLoadingSate,
 }) {
   function handleImageFileChange(event) {
     console.log(event.target.files);
@@ -35,20 +36,26 @@ export default function ImageUpload({
   }
 
   async function uploadImageToCloudinary() {
-    const data=new FormData();
-    data.append('my_file',imageFile);
-    const response=await axios.post('http://localhost:5000/api/admin/products/upload-image',data);
+    setimageLoadingSate(true);
+    const data = new FormData();
+    data.append("my_file", imageFile);
+    const response = await axios.post(
+      "http://localhost:5000/api/admin/products/upload-image",
+      data
+    );
 
-    console.log(response.data.result.url,'response')
-    console.log(response.data?.success,'response')
+    console.log(response.data.result.url, "response");
+    console.log(response.data?.success, "response");
 
-    if(response.data?.success) setuploadImageURL(response.data.result.url)//back to the respone to the backend
-
+    if (response.data?.success) {
+      setuploadImageURL(response.data.result.url);
+      setimageLoadingSate(false)
+    } //back to the respone to the backend
   }
 
-  useEffect(()=>{
-    if(imageFile != null) uploadImageToCloudinary()
-  },[imageFile])
+  useEffect(() => {
+    if (imageFile !== null) uploadImageToCloudinary();
+  }, [imageFile]);
   const inputRef = useRef();
   return (
     <div className="w-full max-w-md px-2 ">
