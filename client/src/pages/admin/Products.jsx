@@ -25,7 +25,7 @@ export default function Products() {
   const [formData, setformData] = useState(initialFormDat);
   const [imageFile, setImageFile] = useState(null);
   const [uploadImageURL, setuploadImageURL] = useState("");
-  const [imageLoadingSate,setimageLoadingSate]=useState(false);
+  const [imageLoadingState,setImageLoadingState]=useState(false);
   console.log(formData)
 
   function onSubmit() {}
@@ -52,8 +52,8 @@ export default function Products() {
               setImageFile={setImageFile}
               uploadImageURL={uploadImageURL}
               setuploadImageURL={setuploadImageURL}
-              setimageLoadingSate={setimageLoadingSate}
-              imageLoadingSate={imageLoadingSate}
+              setImageLoadingState={setImageLoadingState}
+              imageLoadingState={imageLoadingState}
             />
             <div className="py-6 px-5">
               <CommonFrom

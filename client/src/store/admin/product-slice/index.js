@@ -14,11 +14,11 @@ export const addNewProduct = createAsyncThunk(
       {
         withCredentials: true,
         headers: {
-          "content-type": "applications/json",
+          "Content-Type": "application/json",
         },
       }
     );
-    return response?.data
+    return response?.data;
   }
 );
 //fetch all data
@@ -26,40 +26,58 @@ export const fetchAllProducts = createAsyncThunk(
   "/products/fetchAllProducts",
   async (formData) => {
     const response = await axios.get(
-      "http://localhost:5000/api/admin/products/get",
+      "http://localhost:5000/api/admin/products/get"
     );
-    return response?.data
+    return response?.data;
   }
 );
 
-
-export const editProduct= createAsyncThunk(
+export const editProduct = createAsyncThunk(
   "/products/editProduct",
-  async (id) => {
+  async ({ id, formData }) => {
     const response = await axios.put(
       `http://localhost:5000/api/admin/products/edit/${id}`,
+      formData,
+      {
+        withCredentials: true,
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
-    return response?.data
+    return response?.data;
   }
 );
-
 
 export const deleteProduct = createAsyncThunk(
-  "/products/addnewproduct",
+  "/products/deleteProduct",
   async (id) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/admin/products/delete/${id}`,
+      `http://localhost:5000/api/admin/products/delete/${id}`
     );
-    return response?.data
+    return response?.data;
   }
 );
-
 
 const adminProductSlice = createSlice({
   name: "adminProducts",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase();
+    builder
+      .addCase(fetchAllProducts.pending, (state) => {
+        state.isLoading = true;
+      })
+
+      .addCase(fetchAllProducts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.productList = action.payload;
+      })
+      .addCase(fetchAllProducts.rejected, (state, action) => {
+        (state.isLoading = false), (state.productList = []);
+      });
   },
 });
+
+export default adminProductSlice.reducer;

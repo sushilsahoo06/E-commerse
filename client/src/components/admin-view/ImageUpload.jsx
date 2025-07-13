@@ -11,6 +11,7 @@ export default function ImageUpload({
   uploadImageURL,
   setuploadImageURL,
   setimageLoadingSate,
+  imageLoadingState,
 }) {
   function handleImageFileChange(event) {
     console.log(event.target.files);
@@ -49,7 +50,7 @@ export default function ImageUpload({
 
     if (response.data?.success) {
       setuploadImageURL(response.data.result.url);
-      setimageLoadingSate(false)
+      setimageLoadingSate(false);
     } //back to the respone to the backend
   }
 
@@ -80,6 +81,8 @@ export default function ImageUpload({
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground" />
             <span>Drag & Drop or Click to upload Image</span>
           </Label>
+        ) : imageLoadingState ? (
+          <Skeleton className="h-10 bg-gray-100" />
         ) : (
           //if file has already upoload
           <div className="flex items-center justify-between">
