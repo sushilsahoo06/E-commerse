@@ -4,13 +4,14 @@ import { Input } from "../ui/input";
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { Skeleton } from "../ui/skeleton";
 
 export default function ImageUpload({
   imageFile,
   setImageFile,
   uploadImageURL,
   setuploadImageURL,
-  setimageLoadingSate,
+  setImageLoadingState,
   imageLoadingState,
 }) {
   function handleImageFileChange(event) {
@@ -37,7 +38,7 @@ export default function ImageUpload({
   }
 
   async function uploadImageToCloudinary() {
-    setimageLoadingSate(true);
+    setImageLoadingState(true);
     const data = new FormData();
     data.append("my_file", imageFile);
     const response = await axios.post(
@@ -50,7 +51,7 @@ export default function ImageUpload({
 
     if (response.data?.success) {
       setuploadImageURL(response.data.result.url);
-      setimageLoadingSate(false);
+      setImageLoadingState(false);
     } //back to the respone to the backend
   }
 
@@ -82,10 +83,10 @@ export default function ImageUpload({
             <span>Drag & Drop or Click to upload Image</span>
           </Label>
         ) : imageLoadingState ? (
-          <Skeleton className="h-10 bg-gray-100" />
+          <Skeleton className="w-full h-20 rounded-md bg-gray-100"/>
         ) : (
           //if file has already upoload
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between ">
             <div className="flex items-center">
               <FileIcon className="w-8 text-primary mr-2 h-8" />
             </div>

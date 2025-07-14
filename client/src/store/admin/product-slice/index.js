@@ -24,7 +24,7 @@ export const addNewProduct = createAsyncThunk(
 //fetch all data
 export const fetchAllProducts = createAsyncThunk(
   "/products/fetchAllProducts",
-  async (formData) => {
+  async () => {
     const response = await axios.get(
       "http://localhost:5000/api/admin/products/get"
     );
@@ -72,7 +72,8 @@ const adminProductSlice = createSlice({
 
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.productList = action.payload;
+        console.log(action.payload.data)
+        state.productList = action.payload.data;
       })
       .addCase(fetchAllProducts.rejected, (state, action) => {
         (state.isLoading = false), (state.productList = []);

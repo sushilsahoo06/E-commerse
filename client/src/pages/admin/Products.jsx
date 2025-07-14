@@ -8,27 +8,50 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config";
-import React, { Fragment, useState } from "react";
-const initialFormDat = {
-  Image: null,
-  title: " ",
-  Description: " ",
-  category: " ",
-  brand: " ",
-  price: " ",
-  salePrice: " ",
-  totalStock: " ",
+import { addNewProduct, fetchAllProducts } from "@/store/admin/product-slice";
+import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+const initialFormData = {
+  Image: '',
+  title: "",
+  Description: "",
+  category: "",
+  brand: "",
+  price: "",
+  salePrice: "",
+  totalStock: "",
 };
 
 export default function Products() {
   const [openCreateProductDialog, setopenCreateProductDialog] = useState(false);
-  const [formData, setformData] = useState(initialFormDat);
+  const [formData, setformData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
   const [uploadImageURL, setuploadImageURL] = useState("");
   const [imageLoadingState,setImageLoadingState]=useState(false);
-  console.log(formData)
+  const dispatch=useDispatch();
+  const {productList}=useSelector((state)=>state.adminProduct)
 
-  function onSubmit() {}
+  function onSubmit(event) {
+    event.preventDefault();
+    dispatch(addNewProduct({
+      ...formData,
+      image:uploadImageURL
+    })).then((data)=>{
+      if(data?.payload?.success){
+        dispatch(fetchAllProducts());
+        setopenCreateProductDialog(false)
+        setImageFile(null)
+        setformData(initialFormData)
+        toast('Product add Successfully')
+      }
+
+    })
+  }
+ useEffect(()=>{
+  dispatch(fetchAllProducts())
+ },[dispatch])
+ console.log(productList,uploadImageURL)
   return (
     <Fragment>
       <div className="mb-5 flex w-full justify-end">
@@ -61,6 +84,7 @@ export default function Products() {
                 setformData={setformData}
                 fromControls={addProductFormElements}
                 buttonText={"Add"}
+                onSubmit={onSubmit}
               />
             </div>
           </SheetContent>
