@@ -12,8 +12,9 @@ import { addNewProduct, fetchAllProducts } from "@/store/admin/product-slice";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
+import AdminCard from "./AdminCard";
 const initialFormData = {
-  Image: '',
+  Image: "",
   title: "",
   Description: "",
   category: "",
@@ -28,30 +29,30 @@ export default function Products() {
   const [formData, setformData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
   const [uploadImageURL, setuploadImageURL] = useState("");
-  const [imageLoadingState,setImageLoadingState]=useState(false);
-  const dispatch=useDispatch();
-  const {productList}=useSelector((state)=>state.adminProduct)
+  const [imageLoadingState, setImageLoadingState] = useState(false);
+  const dispatch = useDispatch();
+  const { productList } = useSelector((state) => state.adminProduct);
 
   function onSubmit(event) {
     event.preventDefault();
-    dispatch(addNewProduct({
-      ...formData,
-      image:uploadImageURL
-    })).then((data)=>{
-      if(data?.payload?.success){
+    dispatch(
+      addNewProduct({
+        ...formData,
+        image: uploadImageURL,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
         dispatch(fetchAllProducts());
-        setopenCreateProductDialog(false)
-        setImageFile(null)
-        setformData(initialFormData)
-        toast('Product add Successfully')
+        setopenCreateProductDialog(false);
+        setImageFile(null);
+        setformData(initialFormData);
+        toast("Product add Successfully");
       }
-
-    })
+    });
   }
- useEffect(()=>{
-  dispatch(fetchAllProducts())
- },[dispatch])
- console.log(productList,uploadImageURL)
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
   return (
     <Fragment>
       <div className="mb-5 flex w-full justify-end">
@@ -60,36 +61,43 @@ export default function Products() {
         </Button>
       </div>
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
-        <Sheet
-          open={openCreateProductDialog}
-          onOpenChange={() => {
-            setopenCreateProductDialog(false);
-          }}
-        >
-          <SheetContent side="right" className="overflow-auto">
-            <SheetHeader>
-              <SheetTitle>Add New Product</SheetTitle>
-            </SheetHeader>
-            <ImageUpload
-              imageFile={imageFile}
-              setImageFile={setImageFile}
-              uploadImageURL={uploadImageURL}
-              setuploadImageURL={setuploadImageURL}
-              setImageLoadingState={setImageLoadingState}
-              imageLoadingState={imageLoadingState}
-            />
-            <div className="py-6 px-5">
-              <CommonFrom
-                formData={formData}
-                setformData={setformData}
-                fromControls={addProductFormElements}
-                buttonText={"Add"}
-                onSubmit={onSubmit}
-              />
-            </div>
-          </SheetContent>
-        </Sheet>
+        {productList && productList.length > 0
+          ? productList.map((productItem) => 
+              {console.log(productItem)
+              return <AdminCard product={productItem} />}
+            )
+          : null}
       </div>
+
+      <Sheet
+        open={openCreateProductDialog}
+        onOpenChange={() => {
+          setopenCreateProductDialog(false);
+        }}
+      >
+        <SheetContent side="right" className="overflow-auto">
+          <SheetHeader>
+            <SheetTitle>Add New Product</SheetTitle>
+          </SheetHeader>
+          <ImageUpload
+            imageFile={imageFile}
+            setImageFile={setImageFile}
+            uploadImageURL={uploadImageURL}
+            setuploadImageURL={setuploadImageURL}
+            setImageLoadingState={setImageLoadingState}
+            imageLoadingState={imageLoadingState}
+          />
+          <div className="py-6 px-5">
+            <CommonFrom
+              formData={formData}
+              setformData={setformData}
+              fromControls={addProductFormElements}
+              buttonText={"Add"}
+              onSubmit={onSubmit}
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
     </Fragment>
   );
 }
