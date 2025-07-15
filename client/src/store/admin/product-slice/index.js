@@ -4,6 +4,8 @@ const initialState = {
   isLoading: false,
   productList: [],
 };
+
+
 //add new data
 export const addNewProduct = createAsyncThunk(
   "/products/addnewproduct",

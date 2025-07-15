@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const authRouter = require("./routes/auth/Auth-routes");
-const adminProductRouter=require('./routes/admin/products-router')
+const adminProductRouter = require("./routes/admin/products-router");
 
 mongoose
   .connect(
@@ -17,11 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://192.168.1.12:5173",//Same Wi-Fi router as PC
-      "http://10.122.231.151:5173",//PC's mobile hotspot
-    ],
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
@@ -37,6 +33,6 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRouter);
-app.use('/api/admin/products',adminProductRouter)
+app.use("/api/admin/products", adminProductRouter);
 
 app.listen(PORT, () => console.log(`Server is running now ${PORT}`));
