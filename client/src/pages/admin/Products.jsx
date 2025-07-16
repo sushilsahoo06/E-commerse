@@ -12,11 +12,13 @@ import {
   addNewProduct,
   editProduct,
   fetchAllProducts,
+  deleteProduct,
 } from "@/store/admin/product-slice";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import AdminCard from "./AdminCard";
+import { data } from "react-router-dom";
 const initialFormData = {
   Image: "",
   title: "",
@@ -44,7 +46,7 @@ export default function Products() {
     currentEditedId !== null
       ? dispatch(editProduct({ id: currentEditedId, formData })).then(
           (data) => {
-            console.log(data, "Edit");
+            // console.log(data, "Edit");
             if (data?.payload?.success) {
               dispatch(fetchAllProducts());
               setopenCreateProductDialog(false);
@@ -69,6 +71,15 @@ export default function Products() {
           }
         });
   }
+  function handleDelete(getCurrentProductId) {
+    // console.log(getCurrentProductId)
+    dispatch(deleteProduct(getCurrentProductId)).then((data) => {
+      if (data.payload.success) {
+        dispatch(fetchAllProducts());
+      }
+    });
+  }
+
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
@@ -88,6 +99,7 @@ export default function Products() {
                   setopenCreateProductDialog={setopenCreateProductDialog}
                   setcurrentEditedId={setcurrentEditedId}
                   product={productItem}
+                  handleDelete={handleDelete}
                 />
               );
             })

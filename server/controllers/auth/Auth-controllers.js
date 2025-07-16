@@ -67,7 +67,6 @@ const loginUser = async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
         secure: false, // ✅ correct for HTTP (localhost/dev)
-        sameSite: "Lax", // ✅ this is okay if frontend and backend use same IP
       })
       .json({
         success: true,
