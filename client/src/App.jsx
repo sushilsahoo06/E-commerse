@@ -21,6 +21,7 @@ import CheckAuth from "./components/common/CheckAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
+import LoadingThreeDotsPulse from "./motion/Loading";
 
 function App() {
   // const isAuthenticated = false;
@@ -33,7 +34,7 @@ function App() {
   },[dispatch])
 
   if(isLoading){
-    return <div>Loading...</div>
+    return <LoadingThreeDotsPulse/>
   }
   return (
     <div className="flex flex-col overflow-hidden bg-white">
