@@ -8,7 +8,6 @@ export default function AdminCard({
   setopenCreateProductDialog,
   setcurrentEditedId,
 }) {
-  console.log("AdminCard props:", product);
   return (
     <Card className="w-full max-w-sm mx-auto">
       <div>

@@ -13,6 +13,7 @@ export default function ImageUpload({
   setuploadImageURL,
   setImageLoadingState,
   imageLoadingState,
+  isEditMode,
 }) {
   function handleImageFileChange(event) {
     console.log(event.target.files);
@@ -46,8 +47,8 @@ export default function ImageUpload({
       data
     );
 
-    console.log(response.data.result.url, "response");
-    console.log(response.data?.success, "response");
+    // console.log(response.data.result.url, "response");
+    // console.log(response.data?.success, "response");
 
     if (response.data?.success) {
       setuploadImageURL(response.data.result.url);
@@ -63,7 +64,9 @@ export default function ImageUpload({
     <div className="w-full max-w-md px-2 ">
       <Label className="text-lg font-semibold mb-2 block">Upload Image</Label>
       <div
-        className="border-2 border-dashed mx-auto mt-2  h-40 "
+        className={`${
+          isEditMode ? "opacity-60 " : ""
+        }border-2 border-dashed mx-auto mt-2 h-40`}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
@@ -73,17 +76,20 @@ export default function ImageUpload({
           className="hidden"
           ref={inputRef}
           onChange={handleImageFileChange}
+          disabled={isEditMode}
         />
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
-            className="flex flex-col items-center justify-center cursor-pointer h-32"
+            className={`${
+              isEditMode ? "cursor-not-allowed" : ""
+            }flex flex-col items-center justify-center cursor-pointer h-32`}
           >
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground" />
             <span>Drag & Drop or Click to upload Image</span>
           </Label>
         ) : imageLoadingState ? (
-          <Skeleton className="w-full h-20 rounded-md bg-gray-100"/>
+          <Skeleton className="w-full h-20 rounded-md bg-gray-100" />
         ) : (
           //if file has already upoload
           <div className="flex items-center justify-between ">
