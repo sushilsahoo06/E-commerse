@@ -30,7 +30,8 @@ export default function Products() {
   const [imageFile, setImageFile] = useState(null);
   const [uploadImageURL, setuploadImageURL] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
-  
+  const [currentEditedId, setcurrentEditedId] = useState(null);
+
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.adminProduct);
 
@@ -63,10 +64,17 @@ export default function Products() {
       </div>
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
         {productList && productList.length > 0
-          ? productList.map((productItem) => 
-              {console.log(productItem)
-              return <AdminCard product={productItem} />}
-            )
+          ? productList.map((productItem) => {
+              console.log(productItem);
+              return (
+                <AdminCard
+                  setformData={setformData}
+                  setopenCreateProductDialog={setopenCreateProductDialog}
+                  setcurrentEditedId={setcurrentEditedId}
+                  product={productItem}
+                />
+              );
+            })
           : null}
       </div>
 
