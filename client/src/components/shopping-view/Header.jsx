@@ -44,7 +44,7 @@ export default function Header() {
             </Avatar>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent>
+          <DropdownMenuContent align='end' className='w-[200px]'>
             <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
 
