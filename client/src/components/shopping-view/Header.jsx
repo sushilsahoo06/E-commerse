@@ -48,11 +48,11 @@ export default function Header() {
             <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem onClick={()=>navigate("/shop/account")}>
+            <DropdownMenuItem onClick={() => navigate("/shop/account")}>
               <UserRoundPen /> Profile
             </DropdownMenuItem>
             <DropdownMenuItem onClick={logout}>
-              <LogOut/> Log out{" "}
+              <LogOut /> Log out{" "}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -89,11 +89,14 @@ export default function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs">
+            <HeaderRightContent/>
             {menuItems()}
           </SheetContent>
         </Sheet>
         <div className="hidden lg:block">{menuItems()}</div>
-        {isAuthenticated ? <div>{HeaderRightContent()}</div> : null}
+        {isAuthenticated ? (
+          <div className="hidden lg:block">{HeaderRightContent()}</div>
+        ) : null}
       </div>
     </header>
   );
