@@ -18,7 +18,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import AdminCard from "./AdminCard";
-import { data } from "react-router-dom";
+
 const initialFormData = {
   Image: "",
   title: "",
