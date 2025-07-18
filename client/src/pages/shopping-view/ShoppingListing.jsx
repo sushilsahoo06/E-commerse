@@ -9,9 +9,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
 import { ArrowUpDown } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import {fetchAllFilteredProducts} from '@/store/shop/product-slice'
 
 export default function ShoppingListing() {
+const dispatch=useDispatch();
+useEffect(()=>{
+  dispatch(fetchAllFilteredProducts())
+},[dispatch])
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6">
       <Filter />
