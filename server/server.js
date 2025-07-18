@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const authRouter = require("./routes/auth/Auth-routes");
 const adminProductRouter = require("./routes/admin/products-router");
+const shopProductRouter=require('./routes/shop/products')
 
 mongoose
   .connect(
@@ -34,5 +35,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminProductRouter);
+app.use('/api/shop/products',shopProductRouter)
 
 app.listen(PORT, () => console.log(`Server is running now ${PORT}`));
