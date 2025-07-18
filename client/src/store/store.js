@@ -9,6 +9,8 @@ const store=configureStore({
     adminProduct:adminProductSlice,
     shopProduct:shopFilterProducts
   }
+  
 })
+
 
 export default store;

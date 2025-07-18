@@ -6,7 +6,7 @@ const initialState = {
   ProductList: [],
 };
 
-const fetchAllFilteredProducts = createAsyncThunk(
+export const fetchAllFilteredProducts = createAsyncThunk(
   "/shop/fetchAllFilteredProducts",
   async () => {
     const response = await axios.post(
@@ -25,12 +25,12 @@ const shoppingProductslice = createSlice({
       state.isLoading=true;
     })
     .addCase(fetchAllFilteredProducts.fulfilled,(state,action)=>{
-      state.isLoading=false,
+      state.isLoading=false;
       state.ProductList=action.payload;
-      console.log(action.payload)
+      console.log(action.payload.data)
     })
     .addCase(fetchAllFilteredProducts.rejected,(state,action)=>{
-      state.isLoading=false,
+      state.isLoading=false;
       state.ProductList=[];
       
     })

@@ -8,14 +8,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
+import { fetchAllFilteredProducts } from "@/store/shop/product-slice";
 import { ArrowUpDown } from "lucide-react";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import {fetchAllFilteredProducts} from '@/store/shop/product-slice'
+
 
 export default function ShoppingListing() {
 const dispatch=useDispatch();
+const {ProductList}=useSelector((state)=>state.shopProduct);
+console.log(ProductList)
 useEffect(()=>{
   dispatch(fetchAllFilteredProducts())
 },[dispatch])
