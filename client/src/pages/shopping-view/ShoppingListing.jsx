@@ -1,4 +1,5 @@
 import Filter from "@/components/shopping-view/Filter";
+import ShoppinCard from "@/components/shopping-view/ShoppinCard";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,15 +14,13 @@ import { ArrowUpDown } from "lucide-react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
 export default function ShoppingListing() {
-const dispatch=useDispatch();
-const {ProductList}=useSelector((state)=>state.shopProduct);
-console.log(ProductList)
-useEffect(()=>{
-  dispatch(fetchAllFilteredProducts())
-},[dispatch])
+  const dispatch = useDispatch();
+  const { ProductList } = useSelector((state) => state.shopProduct);
+  console.log(ProductList, "productlist");
+  useEffect(() => {
+    dispatch(fetchAllFilteredProducts());
+  }, [dispatch]);
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6">
       <Filter />
@@ -41,7 +40,7 @@ useEffect(()=>{
                   <span>Short by</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align='end' className='w-[200px]' >
+              <DropdownMenuContent align="end" className="w-[200px]">
                 <DropdownMenuRadioGroup>
                   {sortOptions.map((sortItem) => (
                     <DropdownMenuRadioItem key={sortItem.id}>
@@ -53,8 +52,14 @@ useEffect(()=>{
             </DropdownMenu>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-          
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+          {ProductList && ProductList.length > 0
+            ? ProductList.map((productItem) => {
+                return (
+                  <ShoppinCard  product={productItem} />
+                );
+              })
+            : null}
         </div>
       </div>
     </div>

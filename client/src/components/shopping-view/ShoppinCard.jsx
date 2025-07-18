@@ -4,17 +4,18 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
 export default function ShoppinCard({ product }) {
+  console.log(product, "product card");
   return (
-    <Card className="w-full max-w-sm max-auto">
+    <Card className="w-full max-w-sm mx-auto">
       <div>
         <div className="relative">
           <img
             src={product?.image}
             alt={product?.title}
-            className="w-dull h-[300px] rounded-t-lg object-cover"
+            className="w-full h-[300px] rounded-t-lg object-cover"
           />
         </div>
-        {product?.salePrise > 0 ? <Badge>Sale</Badge> : null}
+        {product?.salePrice > 0 ? <Badge>Sale</Badge> : null}
       </div>
 
       <CardContent className="p-4">
@@ -22,21 +23,21 @@ export default function ShoppinCard({ product }) {
         <div>
           <span
             className={`${
-              product?.salePrise > 0 ? "line-through" : ""
+              product?.salePrice > 0 ? "line-through" : ""
             } text-lg font-semibold text-primary`}
           >
             {product?.price}
           </span>
-          {product?.salePrise > 0 ? (
+          {product?.salePrice > 0 ? (
             <span className="text-lg font-semibold text-primary">
               {product?.brand}
             </span>
-          ) : (
-            null
-          )}
+          ) : null}
         </div>
       </CardContent>
-      <CardFooter className='w-full'><Button>Add to cart</Button></CardFooter>
+      <CardFooter className="w-full">
+        <Button>Add to cart</Button>
+      </CardFooter>
     </Card>
   );
 }

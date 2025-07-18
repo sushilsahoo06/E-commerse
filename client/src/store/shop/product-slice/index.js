@@ -26,7 +26,7 @@ const shoppingProductslice = createSlice({
     })
     .addCase(fetchAllFilteredProducts.fulfilled,(state,action)=>{
       state.isLoading=false;
-      state.ProductList=action.payload;
+      state.ProductList=action.payload.data;
       console.log(action.payload.data)
     })
     .addCase(fetchAllFilteredProducts.rejected,(state,action)=>{
