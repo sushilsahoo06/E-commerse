@@ -17,12 +17,27 @@ import { useDispatch, useSelector } from "react-redux";
 export default function ShoppingListing() {
   const dispatch = useDispatch();
   const { ProductList } = useSelector((state) => state.shopProduct);
-  const [filters, setFilters] = useState(null);
+  const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
 
   function handleSort(value) {
     console.log(value);
     setSort(value);
+  }
+  function handleFilter(getSetionId,getCurrentOptions){
+    console.log(getCurrentOptions,getSetionId)
+    let copyFilters={...filters};
+    const indexOfCurrentsections=Object.key(copyFilters).indexOf(getCurrentOptions)
+
+    if(indexOfCurrentsections === -1){
+      copyFilters={
+        ...copyFilters,
+        [getSetionId]:[getCurrentOptions]
+      }
+    }else{
+      const indexOfCurrentOptions=copyFilters[getSetionId].indexOf(getCurrentOptions)
+      if(indexOfCurrentOptions===-1) copyFilters[getSetionId].push(getCurrentOptions)
+    }
   }
   useEffect(() => {
     dispatch(fetchAllFilteredProducts());
@@ -30,7 +45,7 @@ export default function ShoppingListing() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6">
-      <Filter />
+      <Filter filters={filters} handleFilter={handleFilter}/>
       <div className="bg-background w-full rounded-lg shadow-sm ">
         <div className="p-4 border-b flex items-center justify-between">
           <h2 className="text-lg font-extrabold">All Products</h2>

@@ -5,7 +5,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Separator } from "../ui/separator";
 
 
-export default function Filter() {
+export default function Filter({filters, handleFilter}) {
   return (
     <div className="bg-background rounded-lg shadow-sm">
       <div className="p-4 border-b">
@@ -19,7 +19,7 @@ export default function Filter() {
               <div className="grid gap-2 mt-2">
                 {filterOptions[keyItems].map((options) => (
                   <Label className="flex items-center gap-2 font-medium">
-                    <Checkbox className="opacity-100 border border-gray-500"/>
+                    <Checkbox className="opacity-100 border border-gray-500" onCheckedChange={()=>handleFilter(keyItems,options.id)}/>
                     {options.label}
                   </Label>
                 ))}
