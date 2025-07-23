@@ -24,27 +24,55 @@ export default function ShoppingListing() {
     console.log(value);
     setSort(value);
   }
-  function handleFilter(getSetionId,getCurrentOptions){
-    // console.log(getCurrentOptions,getSetionId)
-    let copyFilters={...filters};
-    const indexOfCurrentsections=Object.keys(copyFilters).indexOf(getSetionId)
+  // function handleFilter(getSetionId,getCurrentOptions){
+  //   // console.log(getCurrentOptions,getSetionId)
+  //   let copyFilters={...filters};
+  //   const indexOfCurrentsections=Object.keys(copyFilters).indexOf(getSetionId)
 
-    if(indexOfCurrentsections === -1){
-      copyFilters={
-        ...copyFilters,
-        [getSetionId]:[getCurrentOptions]
-      }
-      console.log(copyFilters);
+  //   if(indexOfCurrentsections === -1){
+  //     copyFilters={
+  //       ...copyFilters,
+  //       [getSetionId]:[getCurrentOptions]
+  //     }
+  //     console.log(copyFilters);
       
-    }
-    else{
-      const indexOfCurrentOptions=copyFilters[getSetionId].indexOf(getCurrentOptions)
-      if(indexOfCurrentOptions===-1) copyFilters[getSetionId].push(getCurrentOptions)
-        else copyFilters[getSetionId].splice(indexOfCurrentOptions,1)
-    }
-    setFilters(copyFilters);
-    sessionStorage.setItem('filters',JSON.stringify(copyFilters))
+  //   }
+  //   else{
+  //     const indexOfCurrentOptions=copyFilters[getSetionId].indexOf(getCurrentOptions)
+  //     if(indexOfCurrentOptions===-1) copyFilters[getSetionId].push(getCurrentOptions)
+  //       else copyFilters[getSetionId].splice(indexOfCurrentOptions,1)
+  //   }
+  //   setFilters(copyFilters);
+  //   sessionStorage.setItem('filters',JSON.stringify(copyFilters))
+  // }
+  function handleFilter(getSetionId, getCurrentOptions) {
+  // Clone the existing filters object to avoid mutating state directly
+  let copyFilters = { ...filters };
+
+  // Check if the current section exists in the filters
+  const sectionKeys = Object.keys(copyFilters);
+  const sectionExists = sectionKeys.includes(getSetionId);//exist on array
+
+  // If section doesn't exist, add it with the current option
+  if (!sectionExists) {
+    copyFilters = {
+      ...copyFilters,
+      [getSetionId]: [getCurrentOptions],
+    };
+    console.log(copyFilters);
+  } else {
+    // Destructure to get current options of the section
+    const currentOptions = copyFilters[getSetionId].indexOf(getCurrentOptions);
+    if(currentOptions === -1) copyFilters[getSetionId].push(getCurrentOptions)
+      else copyFilters[getSetionId].splice(currentOptions,1)
+
   }
+
+  // Update state and save in sessionStorage
+  setFilters(copyFilters);
+  sessionStorage.setItem("filters", JSON.stringify(copyFilters));
+}
+
   useEffect(()=>{
     setSort('price-lowtohigh')
     setFilters(JSON.parse(sessionStorage.getItem('filters'))|| {})
