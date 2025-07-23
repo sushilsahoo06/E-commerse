@@ -25,24 +25,35 @@ export default function ShoppingListing() {
     setSort(value);
   }
   function handleFilter(getSetionId,getCurrentOptions){
-    console.log(getCurrentOptions,getSetionId)
+    // console.log(getCurrentOptions,getSetionId)
     let copyFilters={...filters};
-    const indexOfCurrentsections=Object.key(copyFilters).indexOf(getCurrentOptions)
+    const indexOfCurrentsections=Object.keys(copyFilters).indexOf(getSetionId)
 
     if(indexOfCurrentsections === -1){
       copyFilters={
         ...copyFilters,
         [getSetionId]:[getCurrentOptions]
       }
-    }else{
+      console.log(copyFilters);
+      
+    }
+    else{
       const indexOfCurrentOptions=copyFilters[getSetionId].indexOf(getCurrentOptions)
       if(indexOfCurrentOptions===-1) copyFilters[getSetionId].push(getCurrentOptions)
+        else copyFilters[getSetionId].splice(indexOfCurrentOptions,1)
     }
+    setFilters(copyFilters);
+    sessionStorage.setItem('filters',JSON.stringify(copyFilters))
   }
+  useEffect(()=>{
+    setSort('price-lowtohigh')
+    setFilters(JSON.parse(sessionStorage.getItem('filters'))|| {})
+  },[])
   useEffect(() => {
     dispatch(fetchAllFilteredProducts());
   }, [dispatch]);
-
+  console.log(filters,'filters');
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6">
       <Filter filters={filters} handleFilter={handleFilter}/>
