@@ -13,12 +13,28 @@ import { fetchAllFilteredProducts } from "@/store/shop/product-slice";
 import { ArrowUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 export default function ShoppingListing() {
   const dispatch = useDispatch();
   const { ProductList } = useSelector((state) => state.shopProduct);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
+  const [searchParams,setSearchParams]=useSearchParams();
+
+  function createsearchParamshelper(filterParams){
+    const queryParms=[];
+    for(const [key ,value] of Object.entries(filterParams)){
+      if(Array.isArray(value) && value.length >0){
+        const paramValue=value.join(",")
+        queryParms.push(`${key}=${encodeURIComponent(paramValue)}`)
+      }
+    }
+    console.log(queryParms);
+    return queryParms.join("&")
+  }
+  
+  
 
   function handleSort(value) {
     console.log(value);
@@ -80,10 +96,18 @@ export default function ShoppingListing() {
   useEffect(() => {
     dispatch(fetchAllFilteredProducts());
   }, [dispatch]);
-  console.log(filters,'filters');
+  
+  useEffect(()=>{
+    if(filters && Object.keys(filters).length >0){
+      const creatQuarryString=createsearchParamshelper(filters)
+      setSearchParams(new URLSearchParams(creatQuarryString))
+    }
+
+  },[filters])
+  console.log(searchParams);
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6">
       <Filter filters={filters} handleFilter={handleFilter}/>
       <div className="bg-background w-full rounded-lg shadow-sm ">
         <div className="p-4 border-b flex items-center justify-between">
@@ -103,7 +127,7 @@ export default function ShoppingListing() {
                   <span>Short by</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[200px]">
+              <DropdownMenuContent align="end" className="w-[300px]">
                 <DropdownMenuRadioGroup value={sort} onValueChange={handleSort}>
                   {sortOptions.map((sortItem) => (
                     <DropdownMenuRadioItem
