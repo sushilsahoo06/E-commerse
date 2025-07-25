@@ -12,6 +12,7 @@ export default function Filter({ filters, handleFilter }) {
       </div>
       <div className="p-6 space-y-4">
         {Object.keys(filterOptions).map((keyItems) => (
+
           <Fragment>
             <div>
               <h3 className="text-base font-bold">{keyItems}</h3>

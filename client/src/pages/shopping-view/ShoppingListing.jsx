@@ -13,28 +13,26 @@ import { fetchAllFilteredProducts } from "@/store/shop/product-slice";
 import { ArrowUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+//import { useSearchParams } from "react-router-dom";
 
 export default function ShoppingListing() {
   const dispatch = useDispatch();
   const { ProductList } = useSelector((state) => state.shopProduct);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
-  const [searchParams,setSearchParams]=useSearchParams();
+  //const [searchParams, setSearchParams] = useSearchParams();
 
-  function createsearchParamshelper(filterParams){
-    const queryParms=[];
-    for(const [key ,value] of Object.entries(filterParams)){
-      if(Array.isArray(value) && value.length >0){
-        const paramValue=value.join(",")
-        queryParms.push(`${key}=${encodeURIComponent(paramValue)}`)
-      }
-    }
-    console.log(queryParms);
-    return queryParms.join("&")
-  }
-  
-  
+  // function createsearchParamshelper(filterParams) {
+  //   const queryParms = [];
+  //   for (const [key, value] of Object.entries(filterParams)) {
+  //     if (Array.isArray(value) && value.length > 0) {
+  //       const paramValue = value.join(",");
+  //       queryParms.push(`${key}=${encodeURIComponent(paramValue)}`);
+  //     }
+  //   }
+  //   //console.log(queryParms);
+  //   return queryParms.join("&");
+  // }
 
   function handleSort(value) {
     console.log(value);
@@ -51,7 +49,7 @@ export default function ShoppingListing() {
   //       [getSetionId]:[getCurrentOptions]
   //     }
   //     console.log(copyFilters);
-      
+
   //   }
   //   else{
   //     const indexOfCurrentOptions=copyFilters[getSetionId].indexOf(getCurrentOptions)
@@ -61,54 +59,44 @@ export default function ShoppingListing() {
   //   setFilters(copyFilters);
   //   sessionStorage.setItem('filters',JSON.stringify(copyFilters))
   // }
-  function handleFilter(getSetionId, getCurrentOptions) {
-  // Clone the existing filters object to avoid mutating state directly
-  let copyFilters = { ...filters };
 
-  // Check if the current section exists in the filters
-  const sectionKeys = Object.keys(copyFilters);
-  const sectionExists = sectionKeys.includes(getSetionId);//exist on array
+  function handleFilter(getSectionId, getCurrentOpctions) {
+    console.log(getSectionId, getCurrentOpctions);
 
-  // If section doesn't exist, add it with the current option
-  if (!sectionExists) {
-    copyFilters = {
-      ...copyFilters,
-      [getSetionId]: [getCurrentOptions],
-    };
+    let copyFilters = { ...filters };
+    // Check if the current section exists in the filters
+    const sectionsKeys = Object.keys(copyFilters);
+    const sectionExists = sectionsKeys.includes(getSectionId); //exist on array
+    // If section doesn't exist, add it with the current option
+    if (!sectionExists) {
+      copyFilters = {
+        ...copyFilters,
+        [getSectionId]: [getCurrentOpctions],
+      };
+      
+    } else {
+      const currentOptions =
+        copyFilters[getSectionId].indexOf(getCurrentOpctions);
+      if (currentOptions === -1)
+        copyFilters[getSectionId].push(getCurrentOpctions);
+      else copyFilters[getSectionId].splice(currentOptions, 1);
+    }
+    setFilters(copyFilters);
+    sessionStorage.setItem('filters',JSON.stringify(copyFilters));
     console.log(copyFilters);
-  } else {
-    // Destructure to get current options of the section
-    const currentOptions = copyFilters[getSetionId].indexOf(getCurrentOptions);
-    if(currentOptions === -1) copyFilters[getSetionId].push(getCurrentOptions)
-      else copyFilters[getSetionId].splice(currentOptions,1)
-
+    
   }
-
-  // Update state and save in sessionStorage
-  setFilters(copyFilters);
-  sessionStorage.setItem("filters", JSON.stringify(copyFilters));
-}
-
   useEffect(()=>{
     setSort('price-lowtohigh')
-    setFilters(JSON.parse(sessionStorage.getItem('filters'))|| {})
+    setFilters(JSON.parse(sessionStorage.getItem('filters')) || {})
   },[])
   useEffect(() => {
     dispatch(fetchAllFilteredProducts());
   }, [dispatch]);
-  
-  useEffect(()=>{
-    if(filters && Object.keys(filters).length >0){
-      const creatQuarryString=createsearchParamshelper(filters)
-      setSearchParams(new URLSearchParams(creatQuarryString))
-    }
 
-  },[filters])
-  console.log(searchParams);
-  
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6">
-      <Filter filters={filters} handleFilter={handleFilter}/>
+      <Filter filters={filters} handleFilter={handleFilter} />
       <div className="bg-background w-full rounded-lg shadow-sm ">
         <div className="p-4 border-b flex items-center justify-between">
           <h2 className="text-lg font-extrabold">All Products</h2>

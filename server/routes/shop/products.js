@@ -3,7 +3,7 @@ const {getFilterProduct} = require("../../controllers/shop/productController");
 const router = express.Router();
 
 
-router.post('/get',getFilterProduct);
+router.get('/get',getFilterProduct);
 
 
 module.exports = router;

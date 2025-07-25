@@ -9,7 +9,8 @@ const initialState = {
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/shop/fetchAllFilteredProducts",
   async () => {
-    const response = await axios.post(
+
+    const response = await axios.get(
       "http://localhost:5000/api/shop/products/get"
     );
     return response.data;
@@ -27,7 +28,7 @@ const shoppingProductslice = createSlice({
     .addCase(fetchAllFilteredProducts.fulfilled,(state,action)=>{
       state.isLoading=false;
       state.ProductList=action.payload.data;
-      console.log(action.payload.data)
+      //console.log(action.payload.data)
     })
     .addCase(fetchAllFilteredProducts.rejected,(state,action)=>{
       state.isLoading=false;
