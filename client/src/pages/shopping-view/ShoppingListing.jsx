@@ -13,26 +13,26 @@ import { fetchAllFilteredProducts } from "@/store/shop/product-slice";
 import { ArrowUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-//import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export default function ShoppingListing() {
   const dispatch = useDispatch();
   const { ProductList } = useSelector((state) => state.shopProduct);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
-  //const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // function createsearchParamshelper(filterParams) {
-  //   const queryParms = [];
-  //   for (const [key, value] of Object.entries(filterParams)) {
-  //     if (Array.isArray(value) && value.length > 0) {
-  //       const paramValue = value.join(",");
-  //       queryParms.push(`${key}=${encodeURIComponent(paramValue)}`);
-  //     }
-  //   }
-  //   //console.log(queryParms);
-  //   return queryParms.join("&");
-  // }
+  function createSearchParamsHelper(filterParms) {
+    const queryParams = [];
+    for (const [key, value] of Object.entries(filterParms)) {
+      if (Array.isArray(value) && value.length > 0) {
+        const paramsValue = value.join(",");
+        queryParams.push(`${key}=${encodeURIComponent(paramsValue)}`);
+      }
+    }
+    console.log(queryParams);
+    return queryParams.join("&");
+  }
 
   function handleSort(value) {
     console.log(value);
@@ -73,7 +73,6 @@ export default function ShoppingListing() {
         ...copyFilters,
         [getSectionId]: [getCurrentOpctions],
       };
-      
     } else {
       const currentOptions =
         copyFilters[getSectionId].indexOf(getCurrentOpctions);
@@ -82,17 +81,27 @@ export default function ShoppingListing() {
       else copyFilters[getSectionId].splice(currentOptions, 1);
     }
     setFilters(copyFilters);
-    sessionStorage.setItem('filters',JSON.stringify(copyFilters));
+    sessionStorage.setItem("filters", JSON.stringify(copyFilters));
     console.log(copyFilters);
-    
+    console.log(searchParams, "parms");
   }
-  useEffect(()=>{
-    setSort('price-lowtohigh')
-    setFilters(JSON.parse(sessionStorage.getItem('filters')) || {})
-  },[])
   useEffect(() => {
-    dispatch(fetchAllFilteredProducts());
-  }, [dispatch]);
+    setSort("price-lowtohigh");
+    setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
+  }, []);
+  useEffect(() => {
+    if (filters !== null && sort !== null)
+      dispatch(
+        fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
+      );
+  }, [dispatch, sort, filters]);
+
+  useEffect(() => {
+    if (filters && Object.keys(filters).length > 0) {
+      const createQuerryString = createSearchParamsHelper(filters);
+      setSearchParams(new URLSearchParams(createQuerryString));
+    }
+  }, [filters]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6">
