@@ -48,6 +48,29 @@ const getFilterProduct=async(req,res)=>{
       message:"Some error occured !"
     })
   }
+
+}
+const productDetails=async (req,res)=>{
+  try{
+    const{id}=req.params;
+    const product=await product.findById(id)
+    if(!product){
+      res.status(404).json({
+        success:false,
+        message:"product not found!"
+      })
+    }
+    res.status(200).json({
+      success:true,
+      data:product
+    })
+  }catch(e){
+    console.log(e);
+    res.status(500).json({
+      success:false,
+      message:"some error Occured!"
+    })
+  }
 }
 
-module.exports={getFilterProduct}
+module.exports={getFilterProduct,productDetails}
