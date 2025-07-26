@@ -2,7 +2,9 @@ import React from "react";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { StarIcon } from "lucide-react";
+import { Input } from "../ui/input";
 
 export default function ProductDetails({ open, setOpen, productdetails }) {
   return (
@@ -34,15 +36,56 @@ export default function ProductDetails({ open, setOpen, productdetails }) {
               ${productdetails?.price}
             </p>
             {productdetails?.salePrice > 0 ? (
-              <p className="text-2xl font-bold text-primary">${productdetails?.salePrice}</p>
+              <p className="text-2xl font-bold text-primary">
+                ${productdetails?.salePrice}
+              </p>
             ) : (
               ""
             )}
           </div>
-          <div className="mt-5 mb-5">
-            <Button className='w-full'>Add to Cart</Button>
+          <div className="flex gap-2 mt-4">
+            <div className="flex items-center gap-0.5">
+              <StarIcon className="w-5 h-5 fill-primary" />
+              <StarIcon className="w-5 h-5 fill-primary" />
+              <StarIcon className="w-5 h-5 fill-primary" />
+              <StarIcon className="w-5 h-5 fill-primary" />
+              <StarIcon className="w-5 h-5 fill-primary" />
+            </div>
+            <span>(4.5)</span>
           </div>
-          <Separator/>
+          <div className="mt-5 mb-5">
+            <Button className="w-full">Add to Cart</Button>
+          </div>
+          <Separator />
+          <div className="max-h-[300px] overflow-auto">
+            <h2 className="text-3xl font-bold mt-4">Reviews</h2>
+            <div className="grid gap-6 mt-4">
+              <div className="flex gap-4">
+                <Avatar className="w-10 h-10 border">
+                  <AvatarFallback>SS</AvatarFallback>
+                </Avatar>
+                <div className="grid gap-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold">Sushil Sahoo</h3>
+                  </div>
+                  <div className="flex items-center gap-0.5">
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                  </div>
+                  <p className="text-muated-foreground">
+                    This is awsome product
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-2 flex gap-2">
+              <Input placeholder="Write a review..."/>
+              <Button>Submit</Button>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

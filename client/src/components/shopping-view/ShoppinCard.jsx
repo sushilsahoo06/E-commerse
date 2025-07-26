@@ -22,7 +22,7 @@ export default function ShoppinCard({ product ,handleGetProductDetails}) {
       </div>
 
       <CardContent className="p-4">
-        <h2 className=" font-bold text-xl mb-2">{product?.title}</h2>
+        <h2 className=" font-bold text-xl mb-2 truncate">{product?.title}</h2>
         <div className="flex items-center justify-between mb-2">
           <span className="text-[16px] text-muted-foreground">
             {categoryOptionsMap[product?.category]}
