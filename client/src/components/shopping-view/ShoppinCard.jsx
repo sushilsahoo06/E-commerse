@@ -4,11 +4,11 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { brandOptionsMap, categoryOptionsMap } from "@/config";
 
-export default function ShoppinCard({ product }) {
+export default function ShoppinCard({ product ,handleGetProductDetails}) {
  
   return (
     <Card className="w-full max-w-sm mx-auto">
-      <div>
+      <div onClick={()=>handleGetProductDetails(product?._id)}>
         <div className="relative">
           <img
             src={product?.image}

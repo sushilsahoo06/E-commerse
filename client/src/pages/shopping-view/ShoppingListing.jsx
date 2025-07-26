@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
-import { fetchAllFilteredProducts } from "@/store/shop/product-slice";
+import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/product-slice";
 import { ArrowUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +17,16 @@ import { useSearchParams } from "react-router-dom";
 
 export default function ShoppingListing() {
   const dispatch = useDispatch();
-  const { ProductList } = useSelector((state) => state.shopProduct);
+  const { ProductList,productDetails } = useSelector((state) => state.shopProduct);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  function handleGetProductDetails(getCurrentProductId){
+    console.log(getCurrentProductId);
+    dispatch(fetchProductDetails(getCurrentProductId))
+    
+  }
 
   function createSearchParamsHelper(filterParms) {
     const queryParams = [];
@@ -95,6 +101,8 @@ export default function ShoppingListing() {
         fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
       );
   }, [dispatch, sort, filters]);
+  console.log(productDetails);
+  
 
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
@@ -142,11 +150,17 @@ export default function ShoppingListing() {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
           {ProductList && ProductList.length > 0
             ? ProductList.map((productItem) => {
-                return <ShoppinCard product={productItem} />;
+                return (
+                  <ShoppinCard
+                    product={productItem}
+                    handleGetProductDetails={handleGetProductDetails}
+                  />
+                );
               })
             : null}
         </div>
       </div>
+      
     </div>
   );
 }

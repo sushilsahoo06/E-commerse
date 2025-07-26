@@ -53,8 +53,8 @@ const getFilterProduct=async(req,res)=>{
 const productDetails=async (req,res)=>{
   try{
     const{id}=req.params;
-    const product=await product.findById(id)
-    if(!product){
+    const productDetails= await product.findById(id)
+    if(!productDetails){
       res.status(404).json({
         success:false,
         message:"product not found!"
@@ -62,7 +62,7 @@ const productDetails=async (req,res)=>{
     }
     res.status(200).json({
       success:true,
-      data:product
+      data:productDetails
     })
   }catch(e){
     console.log(e);
