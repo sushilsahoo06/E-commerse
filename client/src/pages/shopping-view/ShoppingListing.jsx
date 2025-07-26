@@ -1,4 +1,5 @@
 import Filter from "@/components/shopping-view/Filter";
+import ProductDetails from "@/components/shopping-view/ProductDetails";
 import ShoppinCard from "@/components/shopping-view/ShoppinCard";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
-import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/product-slice";
+import {
+  fetchAllFilteredProducts,
+  fetchProductDetails,
+} from "@/store/shop/product-slice";
 import { ArrowUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,15 +21,17 @@ import { useSearchParams } from "react-router-dom";
 
 export default function ShoppingListing() {
   const dispatch = useDispatch();
-  const { ProductList,productDetails } = useSelector((state) => state.shopProduct);
+  const { ProductList, productDetails } = useSelector(
+    (state) => state.shopProduct
+  );
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [openDialog, setOpenDialog] = useState(false);
 
-  function handleGetProductDetails(getCurrentProductId){
+  function handleGetProductDetails(getCurrentProductId) {
     console.log(getCurrentProductId);
-    dispatch(fetchProductDetails(getCurrentProductId))
-    
+    dispatch(fetchProductDetails(getCurrentProductId));
   }
 
   function createSearchParamsHelper(filterParms) {
@@ -102,7 +108,6 @@ export default function ShoppingListing() {
       );
   }, [dispatch, sort, filters]);
   console.log(productDetails);
-  
 
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
@@ -110,6 +115,9 @@ export default function ShoppingListing() {
       setSearchParams(new URLSearchParams(createQuerryString));
     }
   }, [filters]);
+  useEffect(() => {
+    if (productDetails !== null) setOpenDialog(true);
+  }, [productDetails]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6">
@@ -160,7 +168,11 @@ export default function ShoppingListing() {
             : null}
         </div>
       </div>
-      
+      <ProductDetails
+        open={openDialog}
+        setOpen={setOpenDialog}
+        productdetails={productDetails}
+      />
     </div>
   );
 }
