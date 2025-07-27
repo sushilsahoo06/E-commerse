@@ -209,6 +209,6 @@ const removeToCart = async (req, res) => {
 module.exports = {
   addToCart,
   removeToCart,
-  dispatchCardItems,
+  fetchCardItems,
   updateCardItems,
 };

@@ -5,6 +5,7 @@ const cors = require("cors");
 const authRouter = require("./routes/auth/Auth-routes");
 const adminProductRouter = require("./routes/admin/products-router");
 const shopProductRouter=require('./routes/shop/products')
+const shoppingCardRoutes=require('./routes/shop/cart_routes')
 
 mongoose
   .connect(
@@ -35,6 +36,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminProductRouter);
-app.use('/api/shop/products',shopProductRouter)
+app.use('/api/shop/products',shopProductRouter);
+app.use('/api/shop/cart',shoppingCardRoutes)
 
 app.listen(PORT, () => console.log(`Server is running now ${PORT}`));
