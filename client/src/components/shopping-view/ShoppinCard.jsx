@@ -4,7 +4,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { brandOptionsMap, categoryOptionsMap } from "@/config";
 
-export default function ShoppinCard({ product ,handleGetProductDetails}) {
+export default function ShoppinCard({ product ,handleGetProductDetails,handleAddToCart}) {
  
   return (
     <Card className="w-full max-w-sm mx-auto">
@@ -50,7 +50,7 @@ export default function ShoppinCard({ product ,handleGetProductDetails}) {
         </div>
       </CardContent>
       <CardFooter >
-        <Button className='w-full'>Add to cart</Button>
+        <Button className='w-full' onClick={()=>handleAddToCart(product?._id)}>Add to cart</Button>
       </CardFooter>
     </Card>
   );

@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
+import { addNewCart } from "@/store/shop/cart-slice";
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
@@ -21,6 +22,7 @@ import { useSearchParams } from "react-router-dom";
 
 export default function ShoppingListing() {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const { ProductList, productDetails } = useSelector(
     (state) => state.shopProduct
   );
@@ -28,6 +30,17 @@ export default function ShoppingListing() {
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDialog, setOpenDialog] = useState(false);
+
+  function handleAddToCart(getcurrentProductId) {
+    console.log(getcurrentProductId);
+    dispatch(
+      addNewCart({
+        userId: user?.id,
+        productId: getcurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => console.log(data));
+  }
 
   function handleGetProductDetails(getCurrentProductId) {
     console.log(getCurrentProductId);
@@ -162,6 +175,7 @@ export default function ShoppingListing() {
                   <ShoppinCard
                     product={productItem}
                     handleGetProductDetails={handleGetProductDetails}
+                    handleAddToCart={handleAddToCart}
                   />
                 );
               })

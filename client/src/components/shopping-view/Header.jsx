@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseUser } from "@fortawesome/free-solid-svg-icons";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { LogOut, Menu, ShoppingCart, UserRoundPen } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,9 +18,11 @@ import {
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
 import { logOutUser } from "@/store/auth-slice";
+import CartWarpper from "./CartWarpper";
 
 export default function Header() {
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const [openCartSheet, setOpenCartSheet] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function logout() {
@@ -31,10 +33,21 @@ export default function Header() {
     const { user } = useSelector((state) => state.auth);
     return (
       <div className="flex lg:items-center lg:flex-row flex-row gap-4">
-        <Button variant="outline" size="icon">
-          <ShoppingCart className="h-6 w-6" />
-          <span className="sr-only">User Cart</span>
-        </Button>
+        <Sheet
+          open={openCartSheet}
+          onOpenChange={() => setOpenCartSheet(false)}
+        >
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setOpenCartSheet(true)}
+          >
+            <ShoppingCart className="h-6 w-6" />
+            <span className="sr-only">User Cart</span>
+          </Button>
+          <CartWarpper />
+        </Sheet>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar>
@@ -44,7 +57,7 @@ export default function Header() {
             </Avatar>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent align='end' className='w-[200px]'>
+          <DropdownMenuContent align="end" className="w-[200px]">
             <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
 
@@ -89,7 +102,7 @@ export default function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs">
-            <HeaderRightContent/>
+            <HeaderRightContent />
             {menuItems()}
           </SheetContent>
         </Sheet>
