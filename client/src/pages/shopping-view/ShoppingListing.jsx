@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
-import { addNewCart } from "@/store/shop/cart-slice";
+import { addNewCart, fetchCartItems } from "@/store/shop/cart-slice";
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
@@ -39,7 +39,11 @@ export default function ShoppingListing() {
         productId: getcurrentProductId,
         quantity: 1,
       })
-    ).then((data) => console.log(data));
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+      }
+    });
   }
 
   function handleGetProductDetails(getCurrentProductId) {

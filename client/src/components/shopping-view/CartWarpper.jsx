@@ -1,14 +1,19 @@
 import React from "react";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import { Button } from "../ui/button";
+import CartItemContent from "./CartItemContent";
 
-export default function CartWarpper() {
+export default function CartWarpper({ cartList }) {
   return (
     <SheetContent className="sm:max-w-md">
       <SheetHeader>
         <SheetTitle>Your Cart</SheetTitle>
       </SheetHeader>
-      <div className="mt-8 space-y-4"></div>
+      <div className="mt-8 space-y-4">
+        {cartList && cartList.length > 0
+          ? cartList.map((item) => <CartItemContent item={item} />)
+          : null}
+      </div>
       <div className="mt-8 space-y-4">
         <div className="flex justify-between mx-4">
           <span className="font-bold">Total</span>
@@ -16,8 +21,7 @@ export default function CartWarpper() {
         </div>
       </div>
       <div className="mx-4">
-      <Button className='w-full mt-5' >Checkout</Button>
-
+        <Button className="w-full mt-5">Checkout</Button>
       </div>
     </SheetContent>
   );

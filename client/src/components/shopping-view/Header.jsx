@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseUser } from "@fortawesome/free-solid-svg-icons";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { LogOut, Menu, ShoppingCart, UserRoundPen } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,15 +19,22 @@ import {
 } from "../ui/dropdown-menu";
 import { logOutUser } from "@/store/auth-slice";
 import CartWarpper from "./CartWarpper";
+import { fetchCartItems } from "@/store/shop/cart-slice";
 
 export default function Header() {
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const { cartList } = useSelector((state) => state.cartItem);
+  console.log(cartList);
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function logout() {
     dispatch(logOutUser());
   }
+  useEffect(() => {
+    dispatch(fetchCartItems(user?.id));
+  }, [dispatch]);
 
   function HeaderRightContent() {
     const { user } = useSelector((state) => state.auth);
@@ -45,7 +52,7 @@ export default function Header() {
             <ShoppingCart className="h-6 w-6" />
             <span className="sr-only">User Cart</span>
           </Button>
-          <CartWarpper />
+          <CartWarpper cartList={cartList?.data?.items || []} />
         </Sheet>
 
         <DropdownMenu>
