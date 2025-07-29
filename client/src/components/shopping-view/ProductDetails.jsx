@@ -5,8 +5,29 @@ import { Separator } from "../ui/separator";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { StarIcon } from "lucide-react";
 import { Input } from "../ui/input";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { toast } from "sonner";
 
 export default function ProductDetails({ open, setOpen, productdetails }) {
+
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  function handleAddToCart(getcurrentProductId) {
+    console.log(getcurrentProductId);
+    dispatch(
+      addNewCart({
+        userId: user?.id,
+        productId: getcurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast("Product is added to cart");
+      }
+    });
+  }
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
@@ -54,7 +75,12 @@ export default function ProductDetails({ open, setOpen, productdetails }) {
             <span>(4.5)</span>
           </div>
           <div className="mt-5 mb-5">
-            <Button className="w-full">Add to Cart</Button>
+            <Button
+              className="w-full"
+              onClick={()=>handleAddToCart(productdetails?._id)}
+            >
+              Add to Cart
+            </Button>
           </div>
           <Separator />
           <div className="max-h-[300px] overflow-auto">
@@ -82,7 +108,7 @@ export default function ProductDetails({ open, setOpen, productdetails }) {
               </div>
             </div>
             <div className="mt-2 flex gap-2">
-              <Input placeholder="Write a review..."/>
+              <Input placeholder="Write a review..." />
               <Button>Submit</Button>
             </div>
           </div>

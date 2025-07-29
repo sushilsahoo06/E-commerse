@@ -62,7 +62,7 @@ const fetchCardItems = async (req, res) => {
     }
     const cart = await Cart.findOne({ userId }).populate({
       path: "items.productId",
-      select: "image title price ",
+      select: "image title salePrice ",
     });
     if (!cart) {
       return res.status(404).json({

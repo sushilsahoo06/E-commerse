@@ -19,6 +19,7 @@ import { ArrowUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function ShoppingListing() {
   const dispatch = useDispatch();
@@ -26,6 +27,8 @@ export default function ShoppingListing() {
   const { ProductList, productDetails } = useSelector(
     (state) => state.shopProduct
   );
+
+  
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -42,6 +45,7 @@ export default function ShoppingListing() {
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
+        toast('Product is added to cart')
       }
     });
   }
