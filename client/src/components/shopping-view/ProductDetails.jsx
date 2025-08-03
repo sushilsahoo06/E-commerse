@@ -8,9 +8,15 @@ import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { toast } from "sonner";
+import { setProductDetails } from "@/store/shop/product-slice";
 
-export default function ProductDetails({ open, setOpen, productdetails }) {
+export default function ProductDetails({ open, setOpen, productdetails }) 
 
+{
+  function handleDialoagClose(){
+    setOpen(false)
+    dispatch(setProductDetails())
+  }
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   function handleAddToCart(getcurrentProductId) {
@@ -29,7 +35,7 @@ export default function ProductDetails({ open, setOpen, productdetails }) {
     });
   }
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleDialoagClose}>
       <DialogContent className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
         {/* Image */}
         <div className="relative overflow-hidden rounded-lg">

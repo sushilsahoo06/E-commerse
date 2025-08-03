@@ -95,7 +95,7 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 w-full border-b bg-background z-40 ">
+    <header className="sticky top-0 w-full border-b bg-background z-40">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
         <Link to="/shop/home" className="flex items-center gap-2">
           <FontAwesomeIcon icon={faHouseUser} className="h-7 w-7" />
